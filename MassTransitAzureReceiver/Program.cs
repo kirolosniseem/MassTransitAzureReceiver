@@ -18,9 +18,14 @@ builder.Services.AddMassTransit(x =>
         cfg.Host(@"Endpoint=sb://kn-azurebus-namespace.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=wynm52OHCB7Ld/2rahX+mei00qKnDNSqvUiK4D8exWM=");
         
         cfg.ReceiveEndpoint(e =>
-                               {
-                                   e.Consumer<SendMessageConsumer>();
-                               });
+        {
+            e.Consumer<SendMessageConsumer>();
+        });
+
+        cfg.ReceiveEndpoint("test-queue", e =>
+        {
+            e.Consumer<SendMessageModelConsumer>();
+        });
     });
 
     x.AddConsumer<SendMessageConsumer>();
